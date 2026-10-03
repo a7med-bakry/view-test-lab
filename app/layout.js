@@ -1,0 +1,2 @@
+export const metadata={title:"View Test Lab",description:"Safe synthetic engagement testing lab"};
+export default function RootLayout({children}){return <html lang="ar" dir="rtl"><body style={{margin:0,fontFamily:"Arial,sans-serif",background:"#f6f7fb"}}>{children}</body></html>}
