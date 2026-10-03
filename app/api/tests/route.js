@@ -1,3 +1,20 @@
 import {NextResponse} from "next/server";
 import {createTest} from "../../../lib/test-store";
-export async function POST(req){try{const body=await req.json();const targetUrl=String(body.targetUrl||"").trim();const eventType=String(body.eventType||"view");const count=Math.min(Math.max(Number(body.count)||1,1),20);if(!/^https?:\\/\\//i.test(targetUrl))return NextResponse.json({error:"INVALID_URL"},{status:400});if(!["view","like","comment"].includes(eventType))return NextResponse.json({error:"INVALID_EVENT_TYPE"},{status:400});return NextResponse.json({test:createTest(targetUrl,eventType,count)},{status:201})}catch{return NextResponse.json({error:"BAD_REQUEST"},{status:400})}}
+
+export async function POST(req){
+  try{
+    const body=await req.json();
+    const targetUrl=String(body.targetUrl||"").trim();
+    const eventType=String(body.eventType||"view");
+    const count=Math.min(Math.max(Number(body.count)||1,1),20);
+    if(!/^https?:\/\//i.test(targetUrl)){
+      return NextResponse.json({error:"INVALID_URL"},{status:400});
+    }
+    if(!["view","like","comment"].includes(eventType)){
+      return NextResponse.json({error:"INVALID_EVENT_TYPE"},{status:400});
+    }
+    return NextResponse.json({test:createTest(targetUrl,eventType,count)},{status:201});
+  }catch{
+    return NextResponse.json({error:"BAD_REQUEST"},{status:400});
+  }
+}
